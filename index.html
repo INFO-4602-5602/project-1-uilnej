@@ -4,7 +4,8 @@
 <style type="text/css" href="project0.css"></style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!--Put your D3 import statement between these two lines-->
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="http://d3js.org/d3.v4.js" charset="utf-8"></script>
+
 <!--Put your D3 import statement between these two lines-->
 </head>
 
@@ -13,30 +14,44 @@
         <h1>Part One: </h1>
         I've made a change!
 	</div>
-    
+
     <div id="partTwo">
         <h1>Part Two: </h1>
         <div id="barchart">
         </div>
 	</div>
-    
+
     <div id="partThree">
         <h1>Part Three &amp; Four: </h1>
         <div id="scatterplot">
             <p id="scatterLabel"></p>
         </div>
 	</div>
-    
+
     <div id="partFive">
         <h1>Part Five: </h1>
         <div id="scatterplotSet">
         </div>
 	</div>
-    
+
     <script type="text/javascript">
         // Put your part one code here ***********************
 
-        
+
+        var anscombe_I = d3.csv("/data/anscombe_I.csv", function(dataset){
+          checkDataset(dataset);
+        });
+        var anscombe_II = d3.csv("/data/anscombe_II.csv", function(dataset){
+          checkDataset(dataset);
+        });
+        var anscombe_III = d3.csv("/data/anscombe_III.csv", function(dataset){
+          checkDataset(dataset);
+        });
+        var anscombe_IV = d3.csv("/data/anscombe_IV.csv", function(dataset){
+          checkDataset(dataset);
+        });
+
+
         // Leave this to test your data uploading. All data uploading should be above this line
         function checkDataset(dataset) {
             if (dataset.length == 11)
@@ -44,13 +59,137 @@
             else
                 $("#partOne").append("<p>data loaded incorrectly. Try using the debugger to help you find the bug!</p>");
         }
-        
+
         // Put your part two code here ***********************
+
         
+        // var margin = {top: 20, right: 20, bottom: 30, left: 40},
+        //     width = 960 - margin.left - margin.right,
+        //     height = 500 - margin.top - margin.bottom;
+        //
+        // // setup x
+        // var xValue = function(d) { return d.Calories;}, // data -> value
+        //     xScale = d3.scale.linear().range([0, width]), // value -> display
+        //     xMap = function(d) { return xScale(xValue(d));}, // data -> display
+        //     xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+        //
+        // // setup y
+        // var yValue = function(d) { return d["Protein (g)"];}, // data -> value
+        //     yScale = d3.scale.linear().range([height, 0]), // value -> display
+        //     yMap = function(d) { return yScale(yValue(d));}, // data -> display
+        //     yAxis = d3.svg.axis().scale(yScale).orient("left");
+        //
+        //
+        // // setup fill color
+        // var cValue = function(d) { return d.Manufacturer;},
+        //     color = d3.scale.category10();
+        //
+        // // add the graph canvas to the body of the webpage
+        // var svg = d3.select("body").append("svg")
+        //           .attr("width", width + margin.left + margin.right)
+        //           .attr("height", height + margin.top + margin.bottom)
+        //           .append("g")
+        //           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        //
+        // // add the tooltip area to the webpage
+        // var tooltip = d3.select("body").append("div")
+        //           .attr("class", "tooltip")
+        //           .style("opacity", 0);
+        //
+        // // load data
+        // d3.csv("cereal.csv", function(error, data) {
+        //             // change string (from CSV) into number format
+        //           data.forEach(function(d) {
+        //           d.Calories = +d.Calories;
+        //           d["Protein (g)"] = +d["Protein (g)"];
+        //           //    console.log(d);
+        //         }}));
+
+//---------------------------------//
+// margins
+// First, we will create some constants to define non-data-related parts of the visualization
+// var w = 700; // Width of our visualization
+// var h = 500; // Height of our visualization
+// var xOffset = 40; // Space for x-axis labels
+// var yOffset = 100; // Space for y-axis labels
+// var margin = 10; // Margin around visualization
+// var vals = ['Rank', 'Frequency', 'TFIDF', 'Document Frequency']; // List of data attributes
+// var xVal = vals[0]; // Value to plot on x-axis
+// var yVal = vals[1]; // Value to plot on y-axis
+//
+//
+// // set the dimensions and margins of the graph
+// var margin = {top: 20, right: 20, bottom: 30, left: 50};
+// var width = 960 - margin.left - margin.right;
+// var height = 500 - margin.top - margin.bottom;
+//
+// // set the ranges
+// var xScale = d3.scaleLinear().range([0, width]);
+// var yScale = d3.scaleLinear().range([height, 0]);
+//
+// var xMap = function(d) { return xScale(xValue(d));};
+// var yMap = function(d) { return yScale(yValue(d));};
+//
+// var xValue = function(d) { return d.Calories;}; // data -> value
+// var yValue = function(d) { return d["Protein (g)"];};
+// // append the svg obgect to the body of the page
+// // appends a 'group' element to 'svg'
+// // moves the 'group' element to the top left margin
+// var svg = d3.select("body").append("svg")
+//             .attr("width", width + margin.left + margin.right)
+//             .attr("height", height + margin.top + margin.bottom)
+//             .append("g")
+//             .attr("transform", "translate("+margin.left + "," + margin.top + ")");
+//
+//
+// d3.csv("/data/anscombe_I.csv", function(error, data){
+//   if (error) throw error;
+//
+//   // Scale the range of the data
+//   xScale.domain(d3.extent(data, function(d) {return d[xVal];}));
+//   yScale.domain([0, d3.max(data, function(d) {return d[yVal];})]);
+//
+//   // Add the scatterplot points
+//   svg.selectAll("circle")
+//      .data(data) //bind to data
+//      .enter()
+//      .append("circle") //add circle to every data point
+//      .attr("r", 5)
+//      .attr("cx", xMap)
+//      .attr("cy", yMap)
+//      .attr("fill", "lightblue")
+//      // .attr("r", function(d) {return d["TFIDF"];});
+//
+//
+//
+//   // Add the X Axis
+//   svg.append("g")
+//      .attr("transform", "translate(0," + height + ")")
+//      .call(d3.axisBottom(xScale));
+//
+//   // Add the Y Axis
+//   svg.append("g")
+//      .call(d3.axisLeft(yScale));
+//
+//   //Add text labels
+//   var xLabel = svg.append("text")
+//                   .attr("class", "label")
+//                   .text(xVal)
+//                   .attr("x", width - 20)
+//                   .attr("y", height - 10);
+//
+//   var yLabel = svg.append("text")
+//                   .attr("class", "label")
+//                   .text(yVal)
+//                   .attr("y", - 10);
+//
+// });
+//
+
         // Put your part three & four code here ***********************
-        
+
         // Put your part five code here ***********************
-        
+
     </script>
 </body>
 
