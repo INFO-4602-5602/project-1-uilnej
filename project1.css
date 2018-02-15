@@ -11,7 +11,7 @@ body {
 }
 
 .point {
-    fill: #f00; 
+    fill: #7FFF00;
     stroke: #000;
 }
 
@@ -20,4 +20,25 @@ body {
     font-size: 12px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.line {
+    fill: none;
+    stroke: darkorchid;
+    stroke-width: 2px;
+    }
+}
+
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 500px;
+    height: 28px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: steelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
 }
